@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import fetchTikTokData from "./assets/api";
 import "./index.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInstagram, faLinkedinIn } from "@fortawesome/free-brands-svg-icons";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -22,9 +24,6 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="video-background">
-        <img className="video-bg" src="/img/bg.gif" alt="" />
-      </div>
       <div className="content">
         <h1>TikTok Video Downloader</h1>
         <h3>Without WaterMark</h3>
@@ -35,11 +34,34 @@ function App() {
                 <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
               </g>
             </svg>
-            <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Enter TikTok URL" type="text" className="input" />
+            <input
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="Enter TikTok URL"
+              type="text"
+              className="input"
+            />
           </div>
           <button type="submit" className="button">
             <span>Download</span>
           </button>
+          <div className="support-me">
+            <label className="icon-container">Support Me :</label>
+            <div className="icons">
+              <a
+                href="https://www.instagram.com/ahmdafriz4/"
+                className="icon-instagram fa-2x"
+              >
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/ahmad-afriza-ez4-ab9173276/"
+                className="icon-linkedin fa-2x"
+              >
+                <FontAwesomeIcon icon={faLinkedinIn} />
+              </a>
+            </div>
+          </div>
         </form>
         {error && <p className="error-message">{error}</p>}
         {data && (
