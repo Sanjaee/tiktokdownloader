@@ -1,3 +1,4 @@
+// App.js
 import React, { useState } from "react";
 import fetchTikTokData from "./assets/api";
 import "./index.css";
@@ -8,17 +9,37 @@ function App() {
   const [url, setUrl] = useState("");
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      setLoading(true);
+
       const responseData = await fetchTikTokData(url);
-      setData(responseData);
-      setError(null);
+
+      // Memeriksa apakah responseData memiliki data yang valid
+      if (responseData && responseData.data && responseData.data.play) {
+        setData(responseData);
+        setError(null);
+      } else {
+        setError("Video not available.");
+        setData(null);
+      }
     } catch (error) {
-      setError("An error occurred while fetching data.");
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status < 500
+      ) {
+        setError("Invalid URL. Please enter a valid TikTok URL.");
+      } else {
+        setError("An error occurred while fetching data.");
+      }
       setData(null);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -26,7 +47,7 @@ function App() {
     <div className="app-container">
       <div className="content">
         <h1>TikTok Video Downloader</h1>
-        <h3>Without WaterMark</h3>
+        <h3>Tanpa WaterMark</h3>
         <form onSubmit={handleSubmit} className="centered-form">
           <div className="group">
             <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -42,8 +63,8 @@ function App() {
               className="input"
             />
           </div>
-          <button type="submit" className="button">
-            <span>Download</span>
+          <button type="submit" className="button" disabled={loading}>
+            <span>{loading ? "Downloading..." : "Download"}</span>
           </button>
           <div className="support-me">
             <label className="icon-container">Support Me :</label>
