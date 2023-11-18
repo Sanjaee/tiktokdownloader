@@ -64,8 +64,9 @@ function App() {
             />
           </div>
           <button type="submit" className="button" disabled={loading}>
-            <span>{loading ? "Downloading..." : "Download"}</span>
+            <span>Download</span>
           </button>
+          {loading && <p>Loading...</p>}
           <div className="support-me">
             <label className="icon-container">Support Me :</label>
             <div className="icons">
